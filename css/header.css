@@ -21,10 +21,14 @@ body{
     justify-content: space-between;
     padding: 30px;
 }
+#menu-container span:hover {
+    color: #f39508;
+}
 #menu-container{
     display: flex;
     gap: 40px;
     color: white;
+    cursor: pointer;
 }
 #logo-photo{
     width: 100px;
