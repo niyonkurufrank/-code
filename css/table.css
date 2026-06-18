@@ -1,0 +1,99 @@
+*,
+::after {
+    margin: 0;
+    padding: 0;
+}
+div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh
+}
+h1 {
+    align-items: center;
+}
+table {
+    width: 50%;
+    border: 2px solid black;
+    border-collapse: collapse;
+    
+}
+th{
+    text-align: left;
+    border: 2px solid black;
+    background: green;
+    padding: 5px 10px;
+    color: white;
+}
+td {
+    border: 2px solid black;
+    padding: 2.5px 5px;
+}
+tr {
+    
+}
+#border-1 {
+    border-collapse: separate;
+    margin-bottom: 10vh;
+}
+#border-2 {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: center;
+}
+#border {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: center;
+}
+#task {
+    color: rgb(28, 85, 240);
+}
+#welcome {
+    color: rgb(20, 85, 7);
+}
+#g {
+    color: rgb(253, 4, 4);
+}
+#e {
+    color: rgb(6, 6, 97);
+}
+#e2 {
+    color: rgb(56, 3, 43);
+}
+#k {
+    color: rgb(226, 172, 21);
+}
+#s {
+    color: rgb(3, 250, 196);
+}
+#for {
+    color: rgb(28, 28, 240);
+}
+#G2 {
+    color: rgb(28, 240, 92);
+}
+#e1 {
+    color: rgb(243, 133, 30);
+}
+#e3 {
+    color: rgb(160, 161, 95);
+}
+#k2 {
+    color: rgb(6, 236, 225);
+}
+#s2 {
+    color: rgb(172, 161, 112);
+}
+#task-2 {
+    background: linear-gradient(
+        90deg,
+        gold,
+        green,
+        rgb(13, 34, 32),
+        blue
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
