@@ -117,3 +117,34 @@ let seatMessage = `Finding Total Price Seats CINEMA HALL will make for all OCCUP
 
 console.log(personMessage);
 console.log(seatMessage);
+
+let attendance = [
+  "present",
+  "absent",
+  "present",
+  "present",
+  "absent",
+  "present",
+  "absent",
+  "present",
+  "present",
+  "absent"
+];
+
+let sum = 0;
+let present = 0;
+let absent = 0;
+
+while (sum < attendance.length) {
+  if (attendance[sum] === "present") {
+    present++;
+  } else {
+    absent++;
+  }
+
+  sum++;
+}
+
+console.log("Total Students:", sum);
+console.log("Present Students:", present);
+console.log("Absent Students:", absent);
