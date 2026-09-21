@@ -1,0 +1,166 @@
+h1 {
+    color: red;
+    text-align: center;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f0fe;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.container {
+    background: #d6dce5;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495e;
+}
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+p#result {
+    min-height: 20px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2a5fff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #1e4bd1;
+}
+
+
+body {
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.box {
+    background: linear-gradient(to bottom, #888 0%, #444 100%);
+    width: 500px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+.header {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.content {
+    padding: 25px;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+button {
+    background: #000;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+button:hover {
+    background: #333;
+}
+
+#btn2 {
+    width: 30%;
+}
+#results {
+    margin-top: 20px;
+    font-size: 18px;
+    font-style: italic;
+    color: #eee;
+    text-align: center;
+}
+
+
+
+.login-card { 
+    text-align: center; 
+    width: 350px; 
+}
+
+h1 { 
+    color: white; 
+    font-size: 50px; 
+    margin-bottom: 30px; 
+}
+
+input[type="password"], input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    border-radius: 15px;
+    background: white;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+.checkbox-div {
+    text-align: left;
+    margin-bottom: 25px;
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+#nextBtn {
+    width: 80%;
+    padding: 15px;
+    background: #e0e0e0;
+    color: #888;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}

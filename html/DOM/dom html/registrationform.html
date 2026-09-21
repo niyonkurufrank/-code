@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<link rel="stylesheet" href="../domcss/registrationform.css">
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Register</h2>
+    <form id="regForm">
+      <input type="text" id="fullname" placeholder="Full Name">
+      <span class="error" id="nameError"></span>
+
+      <input type="email" id="email" placeholder="Email Address">
+      <span class="error" id="emailError"></span>
+
+      <input type="password" id="password" placeholder="Password">
+      <span class="error" id="passError"></span>
+
+      <input type="password" id="cpassword" placeholder="Confirm Password">
+      <span class="error" id="cpassError"></span>
+
+      <label>
+        <input type="checkbox" id="agree"> I agree to terms & conditions
+      </label>
+      <span class="error" id="agreeError"></span>
+
+      <button type="submit">Register</button>
+      <div id="successMsg"></div>
+    </form>
+  </div>
+
+  <div class="table-box">
+    <h2>All Registered Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="usersTable">
+      </tbody>
+    </table>
+  </div>
+
+<script src="../domjavascript/registrationform.js"></script>
+</body>
+</html>

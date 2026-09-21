@@ -171,9 +171,5 @@ function checkResult(marks) {
 }
 
 console.log(checkResult(60));
-<<<<<<< HEAD
-console.log(checkResult(40));
-=======
 console.log(checkResult(40));
 
->>>>>>> fix-buttons
