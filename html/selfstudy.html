@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Date App</title>
+<style>
+    body{background:#222; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; position:relative;}
+    .card{
+        background:white; 
+        width:320px; 
+        padding:25px; 
+        border-radius:15px;
+        position:absolute;
+    }
+    #c2, #c3 {display:none;} /* zihisha 2 na 3 */
+    
+    button{padding:10px 18px; border:none; border-radius:25px; font-weight:bold; cursor:pointer; position:relative;}
+    .yes{background:#facc15;}
+    .no{background:#ef4444; color:white; position:absolute;} /* IYI N'INDI - IBA ABSOLUTE */
+</style>
+</head>
+<body>
+
+<!-- CARD 1 -->
+<div class="card" id="c1">
+    <div style="height:120px; background:#ccc; border-radius:10px; margin-bottom:15px;"></div>
+    <h3>I wanna a relationship of a truly love, can we?</h3>
+    <button class="yes" onclick="showCard(2)">Yes, of course</button>
+    <button class="no" id="no1" onmouseover="runAway('no1')">I'll think about it</button>
+</div>
+
+<!-- CARD 2 -->
+<div class="card" id="c2">
+    <div style="height:120px; background:#ccc; border-radius:10px; margin-bottom:15px;"></div>
+    <h3>I wanna a date for talking and have dinner or lunch</h3>
+    <button class="yes" onclick="showCard(3)">Yes, let's plan</button>
+    <button class="no" id="no2" onmouseover="runAway('no2')">I'm no time</button>
+</div>
+
+<!-- CARD 3 -->
+<div class="card" id="c3">
+    <div style="height:120px; background:#ccc; border-radius:10px; margin-bottom:15px;"></div>
+    <h3>setting of plot</h3>
+    <input type="date" style="width:100%; padding:8px; margin-bottom:10px;"><br>
+    <input type="text" placeholder="Location" style="width:100%; padding:8px; margin-bottom:10px;"><br>
+    <input type="text" placeholder="Say something" style="width:100%; padding:8px; margin-bottom:10px;"><br>
+    <button style="background:green; color:white;" onclick="alert('Sent! ❤️')">send</button>
+</div>
+
+<script>
+// IREKANA CARD IKURIKIRAHO
+function showCard(n){
+    document.getElementById('c1').style.display = 'none';
+    document.getElementById('c2').style.display = 'none';
+    document.getElementById('c3').style.display = 'none';
+    document.getElementById('c' + n).style.display = 'block';
+}
+
+// BUTTON IHUNGA MOUSE
+function runAway(id){
+    let btn = document.getElementById(id);
+    let x = Math.random() * 250; // ihagera hejuru hasi
+    let y = Math.random() * 150; // ihagera iburyo ibumoso
+    
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+}
+</script>
+
+</body>
+</html>
