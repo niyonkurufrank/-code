@@ -1,14 +1,14 @@
 import { FaRegThumbsUp, FaRegThumbsDown, FaRegComment, FaDownload } from "react-icons/fa";
 
-function TopStory() {
+function TopStory({ setShowComment }) {
 
     const mainStories = [
         { id: 1,
           title: "Top Story 1", 
-          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnvtH_D3zLOSBZ7oCfCPMtHSRdg6AYGFKqk73BpYRKpA&s" },
+          image: "https://niyonkurufrank.github.io/my-portfolio/image/image%203%20rbg.png" },
         { id: 2, 
           title: "Top Story 2", 
-          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4SbAlIQRyrITHyH50h6KfbSeGvDl7S5GkvOhVYbZL5A&s=10"},
+          image: "https://niyonkurufrank.github.io/my-portfolio/image/photo-home.png"},
         { id: 3, 
           title: "Top Story 3", 
           image: "https://storiesfromthetop.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-24-at-2.58.43-PM.png" },
@@ -55,6 +55,7 @@ function TopStory() {
     }
   ];
 
+
   return (
     <div className="p-8">
       <div className="flex bg-white rounded-lg shadow-md p-6">
@@ -76,9 +77,9 @@ function TopStory() {
               <img src={story.image} className="w-44 h-26 rounded-md object-cover"/>
               <h1 className="font-bold text-lg text-gray-900">{story.title}</h1>
               <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
-                <span className="flex items-center gap-1"><FaRegThumbsUp /> {story.likes}</span>
-                <span className="flex items-center gap-1"><FaRegThumbsDown /> {story.dislikes}</span>
-                <span className="flex items-center gap-1"><FaRegComment /> {story.comments}</span>
+                <span className="flex items-center gap-1 hover:text-blue-600" title="like"><FaRegThumbsUp /> {story.likes}</span>
+                <span className="flex items-center gap-1 hover:text-blue-600" title="unlike"><FaRegThumbsDown /> {story.dislikes}</span>
+                <span onClick={() => setShowComment({ title: story.title })} className="flex items-center gap-1 hover:text-blue-600" title="comment"><FaRegComment /> {story.comments}</span>
                 <FaDownload className="flex items-center gap-1 cursor-pointer hover:text-blue-600" title="Download" />
               </div>
               <p className="text-sm text-gray-700 font-semibold">{story.description}</p>

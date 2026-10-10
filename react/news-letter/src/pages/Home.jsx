@@ -1,9 +1,9 @@
 import TopStory from "../components/TopStory";
 
-function Home() {
+function Home({ setShowComment }) {
   return (
     <div>
-      <TopStory />
+      <TopStory setShowComment={setShowComment} />
     </div>
   )
 }
