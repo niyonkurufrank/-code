@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>iPhone Calculator</title>
+    <link rel="stylesheet" href="../css/calcurator.css">
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="live-time">9:41</span>
+            <div class="icons">
+                <span>📶</span>
+                <span>🔋</span>
+            </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="calculator">
+            <div class="display">
+                <div class="history"></div>
+                <div class="result">0</div>
+            </div>
+            <div class="buttons">
+                <button class="btn gray" onclick="clearAll()">AC</button>
+                <button class="btn gray" onclick="backspace()">⌫</button>
+                <button class="btn gray" onclick="percent()">%</button>
+                <button class="btn orange" onclick="setOperator('/')">÷</button>
+
+                <button class="btn" onclick="appendNumber(7)">7</button>
+                <button class="btn" onclick="appendNumber(8)">8</button>
+                <button class="btn" onclick="appendNumber(9)">9</button>
+                <button class="btn orange" onclick="setOperator('*')">×</button>
+
+                <button class="btn" onclick="appendNumber(4)">4</button>
+                <button class="btn" onclick="appendNumber(5)">5</button>
+                <button class="btn" onclick="appendNumber(6)">6</button>
+                <button class="btn orange" onclick="setOperator('-')">-</button>
+
+                <button class="btn" onclick="appendNumber(1)">1</button>
+                <button class="btn" onclick="appendNumber(2)">2</button>
+                <button class="btn" onclick="appendNumber(3)">3</button>
+                <button class="btn orange" onclick="setOperator('+')">+</button>
+
+                <button class="btn zero" onclick="appendNumber(0)">0</button>
+                <button class="btn" onclick="appendNumber('.')">.</button>
+                <button class="btn orange" onclick="calculate()">=</button>
+            </div>
+            <div class="home-indicator"></div>
+        </div>
+    </div>
+</body>
+<script src="../javascript/calcurator.js"></script>
+</html>
