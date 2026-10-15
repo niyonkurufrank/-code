@@ -1,57 +1,165 @@
 import { useMemo, useState } from "react";
+import {
+  Archive,
+  ArrowDownLeft,
+  ArrowUpRight,
+  BadgeCheck,
+  CheckCheck,
+  ChevronDown,
+  ChevronRight,
+  Clock3,
+  Inbox,
+  Mail,
+  MessageCircle,
+  MoreHorizontal,
+  Paperclip,
+  Plus,
+  Search,
+  Send,
+  ShieldCheck,
+  Smile,
+  Star,
+  Tag,
+  UserRound,
+  UsersRound,
+  X,
+} from "lucide-react";
+import { MetricCard, PageHeading, Panel, StatusPill } from "../components/ui";
 
-const starterChats = [
-	{ id: 1, name: "Aline Uwase", initials: "AU", color: "#d88e74", online: true, messages: [{ text: "Muraho! Amakuru?", time: "09:40", mine: false }, { text: "Ni meza, wowe se?", time: "09:42", mine: true }, { text: "Ndi mu nzira, ndaza kuhagera vuba 😊", time: "09:44", mine: false }] },
-	{ id: 2, name: "Jean Claude", initials: "JC", color: "#698c72", messages: [{ text: "Wabonye amafoto nakohereje?", time: "08:15", mine: false }, { text: "Yego, ni meza cyane!", time: "08:19", mine: true }] },
-	{ id: 3, name: "Umuryango ❤️", initials: "❤️", color: "#aa7893", messages: [{ text: "Mama: Murakoze mwese!", time: "Ejo", mine: false }] },
-	{ id: 4, name: "Eric N.", initials: "EN", color: "#728bad", messages: [{ text: "Tuzabonana ejo saa yine.", time: "Ejo", mine: false }] },
+const customers = [
+  { id: 1, name: "Sophia Johnson", email: "sophia.j@email.com", orders: 24, spent: 4280, joined: "Mar 12, 2025", tier: "Platinum", color: "violet", product: "Canvas Weekender", orderId: "#ML-2841", subject: "Question about my Canvas Weekender", preview: "Could you tell me if the straps are adjustable?", time: "10:42 AM", unread: 2, priority: true, messages: [{ text: "Hi! I just placed an order for the Canvas Weekender. It looks beautiful.", time: "10:28 AM", mine: false }, { text: "Thanks so much, Sophia! Your order #ML-2841 is being prepared. What can I help you with?", time: "10:34 AM", mine: true }, { text: "Could you tell me if the straps are adjustable?", time: "10:42 AM", mine: false }] },
+  { id: 2, name: "Marcus Lee", email: "marcus.lee@email.com", orders: 18, spent: 3120, joined: "Jun 03, 2025", tier: "Gold", color: "blue", product: "Everyday Ceramic Set", orderId: "#ML-2840", subject: "Delivery update", preview: "Perfect, thanks for checking on that!", time: "10:18 AM", unread: 0, priority: false, messages: [{ text: "Hey, do you have an update on my ceramic set?", time: "9:55 AM", mine: false }, { text: "Hi Marcus, your order #ML-2840 has shipped and is expected to arrive tomorrow.", time: "10:02 AM", mine: true }, { text: "Perfect, thanks for checking on that!", time: "10:18 AM", mine: false }] },
+  { id: 3, name: "Emma Rodriguez", email: "emma.r@email.com", orders: 16, spent: 2890, joined: "Jul 21, 2025", tier: "Gold", color: "rose", product: "Linen Table Throw", orderId: "#ML-2839", subject: "Care instructions", preview: "Is it safe to machine wash on a gentle cycle?", time: "9:56 AM", unread: 1, priority: false, messages: [{ text: "I received my linen throw yesterday and love the texture!", time: "9:43 AM", mine: false }, { text: "So glad it arrived safely, Emma. Is there anything else I can help with?", time: "9:48 AM", mine: true }, { text: "Is it safe to machine wash on a gentle cycle?", time: "9:56 AM", mine: false }] },
+  { id: 4, name: "Daniel Kim", email: "daniel.k@email.com", orders: 12, spent: 2140, joined: "Sep 09, 2025", tier: "Silver", color: "green", product: "Minimal Desk Lamp", orderId: "#ML-2838", subject: "Lamp setup help", preview: "That worked right away. Appreciate it!", time: "9:21 AM", unread: 0, priority: false, messages: [{ text: "I'm having trouble pairing the desk lamp with the app.", time: "8:58 AM", mine: false }, { text: "Try holding the touch control for five seconds until the light pulses. That resets pairing.", time: "9:12 AM", mine: true }, { text: "That worked right away. Appreciate it!", time: "9:21 AM", mine: false }] },
+  { id: 5, name: "Olivia Lopez", email: "olivia.l@email.com", orders: 9, spent: 1850, joined: "Oct 18, 2025", tier: "Silver", color: "gold", product: "Botanical Candle Trio", orderId: "#ML-2837", subject: "Exchange request", preview: "One candle arrived with a chipped lid.", time: "Yesterday", unread: 1, priority: true, messages: [{ text: "One candle arrived with a chipped lid.", time: "Yesterday", mine: false }] },
+  { id: 6, name: "Noah Williams", email: "noah.w@email.com", orders: 7, spent: 1120, joined: "Jan 04, 2026", tier: "Silver", color: "teal", product: "Woven Market Tote", orderId: "#ML-2836", subject: "Product question", preview: "Do you plan to restock the larger size?", time: "Yesterday", unread: 0, priority: false, messages: [{ text: "Do you plan to restock the larger size of the woven tote?", time: "Yesterday", mine: false }, { text: "We expect another batch early next month. I can let you know when it's available.", time: "Yesterday", mine: true }] },
+  { id: 7, name: "Ava Patel", email: "ava.p@email.com", orders: 4, spent: 640, joined: "Feb 12, 2026", tier: "Member", color: "purple", product: "Stoneware Serving Bowl", orderId: "#ML-2835", subject: "Order question", preview: "Thank you for the quick reply!", time: "Mon", unread: 0, priority: false, messages: [{ text: "Is the serving bowl dishwasher safe?", time: "Mon", mine: false }, { text: "Yes, it's dishwasher and microwave safe.", time: "Mon", mine: true }, { text: "Thank you for the quick reply!", time: "Mon", mine: false }] },
 ];
 
-const css = `
-*{box-sizing:border-box}.messages-page{min-height:100vh;padding:24px;display:grid;place-items:center;background:#dce5e2;color:#26332f;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.messenger{width:min(1100px,100%);height:min(740px,calc(100vh - 48px));min-height:480px;display:grid;grid-template-columns:340px 1fr;overflow:hidden;background:#fff;border-radius:14px;box-shadow:0 18px 60px #253d3429}.sidebar{display:flex;flex-direction:column;border-right:1px solid #e9eeeb;min-width:0}.topbar{height:68px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:#f7f9f8}.brand{display:flex;align-items:center;gap:10px;font-weight:700}.brand-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#168b70;color:white}.icon-button{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#64736d;cursor:pointer;font-size:19px}.icon-button:hover{background:#e9efec}.search-wrap{padding:12px 15px}.search{height:40px;padding:0 12px;display:flex;align-items:center;gap:9px;border-radius:9px;background:#f2f5f3;color:#82908a}.search input{width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:12px}.chat-list{overflow-y:auto}.chat-row{width:100%;padding:13px 15px;display:flex;align-items:center;gap:12px;text-align:left;border:0;border-top:1px solid #f0f2f1;background:#fff;color:inherit;cursor:pointer}.chat-row:hover,.chat-row.selected{background:#f2f7f5}.avatar{position:relative;flex:0 0 46px;height:46px;display:grid;place-items:center;border-radius:50%;color:white;font-weight:650;font-size:14px}.online-dot{position:absolute;right:0;bottom:1px;width:11px;height:11px;border:2px solid white;border-radius:50%;background:#32b77b}.chat-copy{min-width:0;flex:1}.chat-line{display:flex;justify-content:space-between;gap:8px}.chat-name{font-size:14px;font-weight:650}.chat-time{color:#84918b;font-size:11px;white-space:nowrap}.preview{display:block;overflow:hidden;margin-top:5px;color:#77847e;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.conversation{min-width:0;display:flex;flex-direction:column}.conversation-head{height:68px;padding:0 20px;display:flex;align-items:center;gap:12px;background:#f7f9f8;border-bottom:1px solid #e9eeeb}.conversation-head .avatar{width:42px;height:42px;flex-basis:42px}.person-name{font-size:14px;font-weight:650}.person-status{margin-top:3px;color:#82908a;font-size:11px}.head-actions{display:flex;gap:6px;margin-left:auto}.thread{flex:1;overflow-y:auto;padding:24px clamp(16px,5vw,60px);background-color:#edf2ef;background-image:radial-gradient(#dce5df .7px,transparent .7px);background-size:16px 16px}.date-chip{width:max-content;margin:0 auto 20px;padding:6px 12px;border-radius:8px;background:white;color:#738079;font-size:11px}.bubble-row{display:flex;margin:9px 0}.bubble-row.mine{justify-content:flex-end}.bubble{max-width:min(75%,440px);padding:10px 12px 7px;border-radius:4px 12px 12px 12px;background:white;box-shadow:0 1px 2px #1f332b14;font-size:13px;line-height:1.45;overflow-wrap:anywhere}.mine .bubble{border-radius:12px 4px 12px 12px;background:#d8f3e5}.bubble-meta{margin-top:4px;display:flex;justify-content:flex-end;gap:5px;color:#82908a;font-size:10px}.ticks{color:#168b70;font-weight:700}.composer{padding:13px 18px;display:flex;align-items:center;gap:9px;background:#f7f9f8}.composer input{min-width:0;flex:1;height:43px;padding:0 15px;border:0;outline:0;border-radius:10px;background:white;font:inherit;font-size:13px}.send-button{width:42px;height:42px;border:0;border-radius:50%;background:#168b70;color:white;cursor:pointer;font-size:17px}.send-button:hover{background:#11785f}.empty{padding:24px;color:#82908a;text-align:center}.back-button{display:none!important}@media(max-width:680px){.messages-page{padding:0;min-height:100dvh}.messenger{height:100dvh;min-height:0;border-radius:0;grid-template-columns:1fr}.messenger.show-chat .sidebar{display:none}.messenger.show-chat .conversation{display:flex}.messenger:not(.show-chat) .conversation{display:none}.back-button{display:inline-grid!important;place-items:center}}
-`;
+const filters = ["All inbox", "Unread", "Priority", "Archived"];
+const quickReplies = ["Thanks for reaching out!", "I’ll look into this for you.", "Your order is on its way!"];
+const initials = (name) => name.split(" ").map((part) => part[0]).join("");
 
-export default function Messages() {
-	const [chats, setChats] = useState(starterChats);
-	const [activeId, setActiveId] = useState(starterChats[0].id);
-	const [query, setQuery] = useState("");
-	const [draft, setDraft] = useState("");
-	const [mobileChatOpen, setMobileChatOpen] = useState(false);
-	const activeChat = chats.find((chat) => chat.id === activeId);
-	const visibleChats = useMemo(() => chats.filter((chat) => chat.name.toLowerCase().includes(query.toLowerCase())), [chats, query]);
+function Messages() {
+  const [conversations, setConversations] = useState(() => customers.map((customer) => customer.id === 1 ? { ...customer, unread: 0 } : customer));
+  const [activeId, setActiveId] = useState(1);
+  const [filter, setFilter] = useState("All inbox");
+  const [search, setSearch] = useState("");
+  const [draft, setDraft] = useState("");
+  const [showDetails, setShowDetails] = useState(true);
+  const [composeOpen, setComposeOpen] = useState(false);
+  const [composeCustomer, setComposeCustomer] = useState("");
+  const [composeText, setComposeText] = useState("");
+  const active = conversations.find((conversation) => conversation.id === activeId);
+  const unreadCount = conversations.filter((conversation) => conversation.unread > 0 && !conversation.archived).length;
+  const visible = useMemo(() => conversations.filter((conversation) => {
+    const term = search.trim().toLowerCase();
+    const matchesSearch = !term || `${conversation.name} ${conversation.email} ${conversation.subject} ${conversation.preview} ${conversation.product}`.toLowerCase().includes(term);
+    const matchesFilter = filter === "All inbox" ? !conversation.archived : filter === "Unread" ? conversation.unread > 0 && !conversation.archived : filter === "Priority" ? conversation.priority && !conversation.archived : conversation.archived;
+    return matchesSearch && matchesFilter;
+  }), [conversations, filter, search]);
 
-	function sendMessage(event) {
-		event.preventDefault();
-		const text = draft.trim();
-		if (!text || !activeChat) return;
-		const time = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date());
-		setChats((current) => current.map((chat) => chat.id === activeId ? { ...chat, messages: [...chat.messages, { text, time, mine: true }] } : chat));
-		setDraft("");
-	}
+  function openConversation(conversation) {
+    setActiveId(conversation.id);
+    setConversations((current) => current.map((item) => item.id === conversation.id ? { ...item, unread: 0 } : item));
+  }
 
-	return <>
-		<style>{css}</style>
-		<main className="messages-page"><section className={`messenger${mobileChatOpen ? " show-chat" : ""}`} aria-label="Ubutumwa">
-			<aside className="sidebar">
-				<div className="sidebar-content">
-				<header className="topbar"><div className="brand"><span className="brand-mark">✉</span> Ubutumwa</div><button className="icon-button" type="button" aria-label="Ikiganiro gishya" onClick={() => { setActiveId(starterChats[0].id); setMobileChatOpen(true); }}>＋</button></header>
-				<div className="search-wrap"><label className="search"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Shakisha ikiganiro..." /></label></div>
-				<div className="chat-list">{visibleChats.map((chat) => {
-					const last = chat.messages[chat.messages.length - 1];
-					return <button className={`chat-row${activeId === chat.id ? " selected" : ""}`} key={chat.id} type="button" onClick={() => { setActiveId(chat.id); setMobileChatOpen(true); }}>
-						<span className="avatar" style={{ background: chat.color }}>{chat.initials}{chat.online && <i className="online-dot" />}</span>
-						<span className="chat-copy"><span className="chat-line"><span className="chat-name">{chat.name}</span><span className="chat-time">{last?.time}</span></span><span className="preview">{last?.mine ? "Wowe: " : ""}{last?.text}</span></span>
-					</button>;
-				})}{visibleChats.length === 0 && <div className="empty">Nta biganiro bihari.</div>}</div>
-				</div>
-			</aside>
-			<section className="conversation" aria-label={activeChat ? `Ikiganiro na ${activeChat.name}` : "Ikiganiro"}>
-				{activeChat ? <>
-					<header className="conversation-head"><button className="icon-button back-button" type="button" aria-label="Subira" onClick={() => setMobileChatOpen(false)}>‹</button><span className="avatar" style={{ background: activeChat.color }}>{activeChat.initials}{activeChat.online && <i className="online-dot" />}</span><div><div className="person-name">{activeChat.name}</div><div className="person-status">{activeChat.online ? "Ari kuri murandasi" : "Ubutumwa bwite"}</div></div><div className="head-actions"><button className="icon-button" type="button" aria-label="Hamagara">☎</button><button className="icon-button" type="button" aria-label="Ibindi">⋮</button></div></header>
-					<div className="thread"><div className="date-chip">UYU MUNSI</div>{activeChat.messages.map((message, index) => <div className={`bubble-row${message.mine ? " mine" : ""}`} key={`${index}-${message.time}`}><div className="bubble">{message.text}<div className="bubble-meta">{message.time}{message.mine && <span className="ticks">✓✓</span>}</div></div></div>)}</div>
-					<form className="composer" onSubmit={sendMessage}><button className="icon-button" type="button" aria-label="Emoji">☺</button><input aria-label="Andika ubutumwa" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Andika ubutumwa..." /><button className="send-button" type="submit" aria-label="Ohereza">➤</button></form>
-				</> : <div className="empty">Hitamo ikiganiro kugira ngo utangire kuganira.</div>}
-			</section>
-		</section></main>
-	</>;
+  function sendMessage(event) {
+    event.preventDefault();
+    const text = draft.trim();
+    if (!text || !active) return;
+    const time = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date());
+    setConversations((current) => current.map((item) => item.id === active.id ? { ...item, preview: text, time, messages: [...item.messages, { text, time, mine: true }] } : item));
+    setDraft("");
+  }
+
+  function startConversation(event) {
+    event.preventDefault();
+    const customerId = Number(composeCustomer);
+    const recipient = customers.find((customer) => customer.id === customerId);
+    const text = composeText.trim();
+    if (!recipient || !text) return;
+    const time = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date());
+    setConversations((current) => {
+      const existing = current.find((item) => item.id === recipient.id);
+      if (existing) return current.map((item) => item.id === recipient.id ? { ...item, archived: false, unread: 0, preview: text, time, messages: [...item.messages, { text, time, mine: true }] } : item);
+      return [{ ...recipient, subject: "New conversation", preview: text, time, unread: 0, priority: false, archived: false, messages: [{ text, time, mine: true }] }, ...current];
+    });
+    setActiveId(recipient.id);
+    setFilter("All inbox");
+    setComposeCustomer("");
+    setComposeText("");
+    setComposeOpen(false);
+  }
+
+  function togglePriority() {
+    if (!active) return;
+    setConversations((current) => current.map((item) => item.id === active.id ? { ...item, priority: !item.priority } : item));
+  }
+
+  function toggleArchived() {
+    if (!active) return;
+    setConversations((current) => current.map((item) => item.id === active.id ? { ...item, archived: !item.archived } : item));
+    setFilter("All inbox");
+  }
+
+  function navigateToCustomers() {
+    window.dispatchEvent(new CustomEvent("marketly:navigate", { detail: "Customers" }));
+  }
+
+  return <div className="page-stack messages-page">
+    <PageHeading eyebrow="CUSTOMER RELATIONSHIPS" title="Messages" description="Every customer conversation, order update, and follow-up in one place." actions={<><span className="inbox-health"><i /> Inbox is healthy</span><button className="button button-primary" onClick={() => setComposeOpen(true)}><Plus size={16} /> New message</button></>} />
+    <div className="metric-grid metric-grid-three messages-metrics">
+      <MetricCard label="Open conversations" value={String(conversations.filter((conversation) => !conversation.archived).length).padStart(2, "0")} change="Across your customer inbox" icon={MessageCircle} tone="gold" />
+      <MetricCard label="Awaiting your reply" value={String(conversations.filter((conversation) => conversation.unread > 0 && !conversation.archived).length).padStart(2, "0")} change="Customers are waiting" icon={Mail} tone="blue" />
+      <MetricCard label="VIP customers" value={String(conversations.filter((conversation) => ["Gold", "Platinum"].includes(conversation.tier)).length).padStart(2, "0")} change="Gold & Platinum members" icon={BadgeCheck} tone="purple" />
+    </div>
+
+    <Panel className="messages-panel" title="Customer inbox" subtitle={`${unreadCount} unread conversations · synced with your customer directory`} action={<span className="inbox-live"><i /> Live inbox</span>}>
+      <div className="messages-workspace">
+        <aside className="inbox-column" aria-label="Conversation list">
+          <label className="messages-search"><Search size={15} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search people, orders, messages" aria-label="Search conversations" /><kbd>⌘ K</kbd></label>
+          <div className="inbox-filters" role="tablist" aria-label="Filter inbox">
+            {filters.map((item) => <button key={item} role="tab" aria-selected={filter === item} className={filter === item ? "inbox-filter inbox-filter-active" : "inbox-filter"} onClick={() => setFilter(item)}>{item}{item === "Unread" && unreadCount > 0 && <span>{unreadCount}</span>}</button>)}
+          </div>
+          <div className="conversation-list">
+            {visible.map((conversation) => <button type="button" key={conversation.id} className={`conversation-row${activeId === conversation.id ? " conversation-row-active" : ""}`} onClick={() => openConversation(conversation)}>
+              <span className={`conversation-avatar avatar-${conversation.color}`}>{initials(conversation.name)}<i className="avatar-presence" /></span>
+              <span className="conversation-preview"><span className="conversation-row-top"><strong>{conversation.name}</strong><time>{conversation.time}</time></span><span className="conversation-subject">{conversation.subject}</span><span className="conversation-lastline">{conversation.preview}</span><span className="conversation-badges">{conversation.tier === "Platinum" && <span className="mini-vip"><Star size={10} fill="currentColor" /> VIP</span>}{conversation.priority && <span className="mini-priority">Priority</span>}<span className="conversation-order">{conversation.orderId}</span></span></span>
+              {conversation.unread > 0 && <span className="unread-badge">{conversation.unread}</span>}
+            </button>)}
+            {visible.length === 0 && <div className="inbox-empty"><Inbox size={23} /><strong>No conversations found</strong><span>Try another filter or search term.</span></div>}
+          </div>
+          <div className="inbox-footer"><UsersRound size={14} /><span>Showing {visible.length} of {conversations.length} customers</span><button type="button" onClick={navigateToCustomers}>Directory <ChevronRight size={13} /></button></div>
+        </aside>
+
+        <section className="thread-column" aria-label={active ? `Conversation with ${active.name}` : "Conversation"}>
+          {active ? <>
+            <header className="thread-header">
+              <div className="thread-contact"><span className={`conversation-avatar thread-avatar avatar-${active.color}`}>{initials(active.name)}<i className="avatar-presence" /></span><div className="thread-contact-copy"><strong>{active.name}{active.tier === "Platinum" && <BadgeCheck size={14} />}</strong><span>{active.email} <i /> Customer since {active.joined}</span></div></div>
+              <div className="thread-actions"><button type="button" className={`thread-action${active.priority ? " thread-action-selected" : ""}`} onClick={togglePriority} aria-label={active.priority ? "Remove priority" : "Mark as priority"}><Star size={16} fill={active.priority ? "currentColor" : "none"} /></button><button type="button" className="thread-action" onClick={toggleArchived} aria-label={active.archived ? "Unarchive conversation" : "Archive conversation"}><Archive size={16} /></button><button type="button" className="thread-action thread-details-toggle" onClick={() => setShowDetails((show) => !show)} aria-label="Toggle customer details"><MoreHorizontal size={18} /></button></div>
+            </header>
+            <div className="order-context"><span className="order-context-icon"><Tag size={14} /></span><div><span>Related order</span><strong>{active.orderId} <i /> {active.product}</strong></div><StatusPill tone={active.orderId === "#ML-2837" ? "cancelled" : "delivered"}>{active.orderId === "#ML-2837" ? "Needs attention" : "Order placed"}</StatusPill><button type="button" onClick={() => window.dispatchEvent(new CustomEvent("marketly:navigate", { detail: "Orders" }))}>View order <ChevronRight size={13} /></button></div>
+            <div className="thread-messages"><div className="thread-day-divider"><span />Today, May 26<span /></div>{active.messages.map((message, index) => <div className={`message-line${message.mine ? " message-line-mine" : ""}`} key={`${active.id}-${index}-${message.time}`}>
+              {!message.mine && <span className={`message-avatar avatar-${active.color}`}>{initials(active.name)}</span>}
+              <div className="message-body"><span className="message-author">{message.mine ? "You" : active.name}</span><div className="message-bubble">{message.text}</div><span className="message-time">{message.time}{message.mine && <CheckCheck size={13} />}</span></div>
+            </div>)}</div>
+            <div className="quick-replies"><span>Quick replies</span>{quickReplies.map((reply) => <button type="button" key={reply} onClick={() => setDraft(reply)}>{reply}</button>)}</div>
+            <form className="message-composer" onSubmit={sendMessage}><div className="composer-input-wrap"><textarea aria-label="Write a reply" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={`Reply to ${active.name.split(" ")[0]}…`} rows="1" onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendMessage(event); } }} /><div className="composer-tools"><button type="button" aria-label="Attach file"><Paperclip size={16} /></button><button type="button" aria-label="Insert emoji"><Smile size={16} /></button><span>Press Enter to send · Shift + Enter for a new line</span></div></div><button className="send-message-button" type="submit" disabled={!draft.trim()}><Send size={15} /><span>Send</span></button></form>
+          </> : <div className="thread-placeholder"><MessageCircle size={30} /><strong>Select a conversation</strong><span>Choose a customer from your inbox to view their conversation.</span></div>}
+        </section>
+
+        {active && showDetails && <aside className="customer-details" aria-label="Customer details"><div className="details-title"><span>Customer profile</span><button type="button" onClick={() => setShowDetails(false)} aria-label="Hide customer details"><X size={15} /></button></div><div className="customer-profile"><span className={`profile-avatar-large avatar-${active.color}`}>{initials(active.name)}</span><strong>{active.name}</strong><span>{active.email}</span><StatusPill tone={active.tier.toLowerCase()}>{active.tier} member</StatusPill><button type="button" className="profile-directory-link" onClick={navigateToCustomers}>View customer profile <ChevronRight size={13} /></button></div>
+          <div className="customer-stats"><div><span>Total spent</span><strong>${active.spent.toLocaleString("en-US", { minimumFractionDigits: 2 })}</strong></div><div><span>Orders</span><strong>{active.orders}</strong></div></div>
+          <div className="details-section"><div className="details-section-heading"><span>Recent order</span><button type="button" onClick={() => window.dispatchEvent(new CustomEvent("marketly:navigate", { detail: "Orders" }))}>All orders</button></div><div className="recent-order-card"><span className="recent-order-icon"><ArrowDownLeft size={15} /></span><div><strong>{active.product}</strong><span>{active.orderId} · May 26, 2026</span></div><ChevronDown size={14} /></div></div>
+          <div className="details-section customer-tags"><div className="details-section-heading"><span>Customer since</span></div><div className="joined-date"><Clock3 size={14} />{active.joined}</div><div className="details-tip"><ShieldCheck size={15} /><span>Customer information is synced with your directory.</span></div></div>
+          <button type="button" className="details-open-directory" onClick={navigateToCustomers}><UserRound size={15} /> Open in customer directory <ArrowUpRight size={14} /></button>
+        </aside>}
+      </div>
+    </Panel>
+
+    {composeOpen && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setComposeOpen(false); }}><form className="modal-card compose-modal" onSubmit={startConversation}><div className="modal-heading"><div><p className="eyebrow">CUSTOMER SUPPORT</p><h2>Start a conversation</h2></div><button type="button" className="icon-button" onClick={() => setComposeOpen(false)} aria-label="Close dialog"><X size={18} /></button></div><label className="form-field">Customer<select required autoFocus value={composeCustomer} onChange={(event) => setComposeCustomer(event.target.value)}><option value="">Choose a customer…</option>{customers.map((customer) => <option key={customer.id} value={customer.id}>{customer.name} · {customer.email}</option>)}</select></label><label className="form-field">Message<textarea required rows="4" value={composeText} onChange={(event) => setComposeText(event.target.value)} placeholder="Write a helpful, personal message…" /></label><div className="modal-actions"><button type="button" className="button button-secondary" onClick={() => setComposeOpen(false)}>Cancel</button><button type="submit" className="button button-primary"><Send size={15} /> Send message</button></div></form></div>}
+  </div>;
 }
+
+export default Messages;
