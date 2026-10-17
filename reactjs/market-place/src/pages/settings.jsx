@@ -8,7 +8,7 @@ const startingPreferences = [
   { id: "weekly", title: "Weekly performance digest", description: "A weekly email summary of your store’s performance.", enabled: true },
 ];
 function Settings() {
-  const [profile, setProfile] = useState({ name: "NIYONKURU Frank", email: "niyonkurufrank91@gmail.com", store: "Northstar Goods", phone: "+1 (415) 555-0138" });
+  const [profile, setProfile] = useState({ name: "NIYONKURU Frank", email: "niyonkurufrank91@gmail.com", store: "Northstar Goods", phone: "+250 798 396 450" });
   const [preferences, setPreferences] = useState(startingPreferences); const [saved, setSaved] = useState(false);
   const updateProfile = (event) => { event.preventDefault(); setSaved(true); window.setTimeout(() => setSaved(false), 2800); };
   const togglePreference = (id) => setPreferences((current) => current.map((item) => item.id === id ? { ...item, enabled: !item.enabled } : item));
